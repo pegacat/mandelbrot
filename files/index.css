@@ -1,0 +1,25 @@
+#set {
+  width: 1200px;
+  height: 800px;
+  border: solid 1px red;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+}
+
+#rect {
+  border: solid 2px red;
+  pointer-events: none;
+  display: none;
+}
+
+table, th, td {
+  border: 0px solid black;
+  border-collapse: collapse;
+  border-image-width: 0px;
+  padding: 0px;
+}
+
+#borderimg {
+  border-image-width: 0px;
+}		

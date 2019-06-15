@@ -7,7 +7,7 @@ function draw(x,y,mag, id) {
   if (mag == null || mag < 300) mag = 300;
 
   const { createCanvas } = require('canvas')
-  const canvas = createCanvas(300, 200)
+  const canvas = createCanvas(400, 400)
 
   render(x, y, mag, id, canvas)
 //  render(-2, -1, 300, canvas)
@@ -62,13 +62,12 @@ function checkValue(real,imaginary)
 
   var real_part, imaginary_part, dist_squared;
 
-  const maxIterations = 1000;
+  const maxIterations = 2000;
   for (let i = 0; i < maxIterations; i++) 
   {
     real_part = real * real - (imaginary * imaginary);
     imaginary_part = 2 * real * imaginary;
     dist_squared = real_part * real_part + imaginary_part * imaginary_part;
-    if (dist_squared < 0.001) return 0;
     if (dist_squared > 4) return (i);
     real = real_part + realer;
     imaginary = imaginary_part + imaginarier;

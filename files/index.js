@@ -85,7 +85,7 @@
         }
 
 		function resetImages(rect) {
-			// find bounds of set to display, then break into 16 sub-views...
+			// find bounds of set to display, then break into 6 sub-views...
 			
 			// reset start positions to be the top left of selection
 			offsetX = offsetX + (rect.x0 / magnificationFactor);
@@ -95,16 +95,16 @@
 			magnificationFactor = magnificationFactor * displayWidth / (rect.x1-rect.x0);
 			if (magnificationFactor<0) magnificationFactor *= -1;
 			
-			// break into 16 sub images to compute on the back end nodes...	
+			// break into 6 sub images to compute on the back end nodes...	
 			var images = document.getElementsByTagName("img");
-			// nb - this assumes 16 images in a 4x4 grid - could make more generic
+			// nb - this assumes 6 images in a 3x2 grid - could make more generic
 		    for (i = 0; i < images.length; i++) {  
-		  		let x = i % 4;
-				let y = Math.floor(i/4);
+		  		let x = i % 3;
+				let y = Math.floor(i/3);
 				
 				// calculate the 'view window' on the set of each of the images
-				let localX = offsetX + (x*displayWidth/magnificationFactor)/4;		
-				let localY = offsetY + (y*displayHeight/magnificationFactor)/4;
+				let localX = offsetX + (x*displayWidth/magnificationFactor)/3;		
+				let localY = offsetY + (y*displayHeight/magnificationFactor)/2;
 				
 				// calculate the URL to call the back end node service
 				images[i].src="./set?id="+i+"&x="+localX+"&y="+localY+"&mag="+magnificationFactor;

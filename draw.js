@@ -1,4 +1,4 @@
-function draw(x,y,mag, id) {
+function draw(x,y,mag, id, canvasWidth, canvasHeight) {
 
   if (x==null || x<-2) x=-2;
   if (x>1) x=1;
@@ -7,7 +7,9 @@ function draw(x,y,mag, id) {
   if (mag == null || mag < 300) mag = 300;
 
   const { createCanvas } = require('canvas')
-  const canvas = createCanvas(400, 400)
+//  const canvas = createCanvas(canvasWidth, canvasHeight)
+console.log("creating canvas: " + canvasWidth + "," +  canvasHeight)
+  const canvas = createCanvas(canvasWidth, canvasHeight)
 
   render(x, y, mag, id, canvas)
 //  render(-2, -1, 300, canvas)
@@ -26,7 +28,7 @@ function draw(x,y,mag, id) {
 
 function render(offsetX, offsetY, magnificationFactor, id, myCanvas)
 {
-  console.log("rendering... (" + offsetX + "," + offsetY + ") @ " + magnificationFactor);
+  console.log("rendering... (" + offsetX + "," + offsetY + ") @ " + magnificationFactor + " canvas: " + myCanvas.width + ", " + myCanvas.height);
 
   var ctx = myCanvas.getContext('2d')
 

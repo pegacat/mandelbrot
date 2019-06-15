@@ -107,7 +107,7 @@
 				let localY = offsetY + (y*displayHeight/magnificationFactor)/2;
 				
 				// calculate the URL to call the back end node service
-				images[i].src="./set?id="+i+"&x="+localX+"&y="+localY+"&mag="+magnificationFactor;
+				images[i].src="./set?id="+i+"&x="+localX+"&y="+localY+"&mag="+magnificationFactor+"&width=400&height=400";
 				
 				//x[i].addEventListener('mousedown', function(event){event.preventDefault()});
 		    } 

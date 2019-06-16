@@ -26,26 +26,67 @@ console.log("creating canvas: " + canvasWidth + "," +  canvasHeight)
  *  @param canvas - the canvas to draw the set on
  */
 
+let maxIterations = 1000;
+
 function render(offsetX, offsetY, magnificationFactor, id, myCanvas)
 {
   console.log("rendering... (" + offsetX + "," + offsetY + ") @ " + magnificationFactor + " canvas: " + myCanvas.width + ", " + myCanvas.height);
 
   var ctx = myCanvas.getContext('2d')
 
+  var histogram = new Array(maxIterations).fill(0);;
+
+  if (magnificationFactor > 10000) maxIterations = 5000;
+
+/*  console.log("created histogram array of length: " + histogram.length);
+
+  - doesn't work in segmented space, as histograms different for each portion :-(.
+   // compute histogram
+   for (let xPixel = 0; xPixel < myCanvas.width; xPixel++) 
+   {
+     for (let yPixel = 0; yPixel < myCanvas.height; yPixel++) 
+     {
+       let iterationCount = checkValue(offsetX + (xPixel / magnificationFactor), offsetY + (yPixel / magnificationFactor));
+		histogram[iterationCount]++;
+	 }
+   }	
+
+   // compute histogram numeric total
+   let totalPixels = myCanvas.width * myCanvas.height;
+
+   // turn histogram into cumulative histogram - count is a running total of 'non zero' pixels	
+   var count = histogram[maxIterations-1];
+   for (i = maxIterations-2; i>0; i--)  // note - skip '0' when computing totals...
+   {
+      count += histogram[i];
+      histogram[i] = count;
+   }
+   var countFactor = count/100;
+ 
+   // in loop - something like:
+   let shade = Math.floor(histogram[iterationCount]/countFactor); // should be a number between 0 and 100...
+*/
+
+  // pass 2: draw image	
   for (let xPixel = 0; xPixel < myCanvas.width; xPixel++) 
   {
     for (let yPixel = 0; yPixel < myCanvas.height; yPixel++) 
     {
 
-      const belongsToSet = checkValue(offsetX + (xPixel / magnificationFactor), offsetY + (yPixel / magnificationFactor));
+      const iterationCount = checkValue(offsetX + (xPixel / magnificationFactor), offsetY + (yPixel / magnificationFactor));
 
-      if (belongsToSet === 0) {
+      if (iterationCount === 0) {
         ctx.fillStyle = '#000';
         ctx.fillRect(xPixel,yPixel, 1,1);   // Draw a black pixel
       } 
 	  else 
 	  {
-        ctx.fillStyle = `hsl(240, 100%, ${belongsToSet}%)`;  // Draw a colorful pixel
+//	    let shade = 20*Math.log(iterationCount*150/maxIterations); // should be a number between 0 and 100...
+// 	    let shade = 15*Math.log(iterationCount); // should be a number between 0 and 100...
+	
+		let shade = (magnificationFactor < 1000)?iterationCount:15*Math.log(iterationCount*1000/maxIterations);
+	
+       ctx.fillStyle = `hsl(240, 100%, ${shade}%)`;  // Draw a colorful pixel
         ctx.fillRect(xPixel,yPixel, 1,1);
       }
     } // y loop
@@ -64,7 +105,6 @@ function checkValue(real,imaginary)
 
   var real_part, imaginary_part, dist_squared;
 
-  const maxIterations = 2000;
   for (let i = 0; i < maxIterations; i++) 
   {
     real_part = real * real - (imaginary * imaginary);
